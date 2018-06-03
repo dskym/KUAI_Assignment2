@@ -55,8 +55,7 @@ int t, d;
 vector<string> filePath;
 map<string, Data*> word;
 map<int, vector<int>> stateToindex;
-ofstream ofs("recognized2.txt");
-ofstream chk("check.txt");
+ofstream ofs("recognized3.txt");
 
 int main() {
 	loadFilePath();
@@ -79,7 +78,6 @@ int main() {
 	}
 
 	ofs.close();
-	chk.close();
 
 	return 0;
 }
@@ -421,38 +419,27 @@ void outputData(string path, vector<string> result) {
 
 	ofs << "\"" << name << ".rec\"" << endl;
 
-	if (result.size() > 7)
-		chk << path << endl;
-
-	if (result.size() == 9) {
-		for (int i = 1; i < result.size() - 1; ++i)
+	if (result.size() == 7) {
+		for (int i = 0; i < result.size(); ++i)
 			ofs << result[i] << endl;
 	}
 	else if (result.size() == 8) {
-		for (int i = 0; i < result.size() - 2; ++i)
+		for (int i = 0; i < result.size() - 1; ++i)
+			ofs << result[i] << endl;
+	}
+	else if (result.size() == 9) {
+		for (int i = 1; i < result.size() - 1; ++i)
 			ofs << result[i] << endl;
 	}
 	else {
 		int count = 0;
-		bool flag = false;
 
-		for (int i = 0; i < result.size(); ++i) {
+		for (int i = 1; i < result.size(); ++i) {
 			if (count == 7)
 				break;
 
-			if (result[i] == "oh" && flag == false) {
-				flag = true;
-				continue;
-			}
-			else if (result[i] == "oh" && flag == true) {
-				ofs << result[i] << endl;
-				count++;
-				flag = false;
-			}
-			else {
-				ofs << result[i] << endl;
-				count++;
-			}
+			ofs << result[i] << endl;
+			count++;
 		}
 	}
 
